@@ -1,0 +1,255 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block stylesheets %}
+    <link href="http://localhost/bagen/style/tableau_depense.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/popup_supprimer_compte.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/affichercompte.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+    
+    {% if "/supprimer" in app.request.pathinfo  %}
+    <div id="overlay" class="overlay">
+        <div id="popup" class="popup" style="width:fit-content; text-align: center">
+            <div>
+            <h2 style="margin-top: 0px !important">
+                Confirmer la suppression  
+            </h2>
+            </div>
+            <div style="margin-bottom: 10px">
+                <a>Voulez-vous vraiment supprimer définitivement ce compte ?</a>
+            </div>
+            <div>
+                <a href="{{ path('compte.supprimer', {id:compte.id}) }}" class="btn btn-primary">valider</a>
+                <a href="{{ path('compte', {id:compte.id}) }}" class="btn btn-annuler" style="margin-left: 15px">annuler</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if "/cloturer" in app.request.pathinfo  %}
+    <div id="overlay" class="overlay">
+        <div id="popup" class="popup" style="width:fit-content; text-align: center">
+            <div>
+            <h2 style="margin-top: 0px !important">
+                Confirmer la cloture  
+            </h2>
+            </div>
+            <div style="margin-bottom:10px">
+                Voulez-vous vraiment cloturer définitivement ce compte ?
+            </div>
+            <div>
+                <a href="{{ path('compte.cloturer', {id:compte.id}) }}" class="btn btn-primary">valider</a>
+                <a href="{{ path('compte', {id:compte.id}) }}" class="btn btn-annuler" style="margin-left: 15px">annuler</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+    
+    <div class="row">
+        <div style="text-align: end" >
+            <a>
+               créé le : {{ compte.ladatecreation }}
+            </a>
+        </div>
+    </div>
+    <div class="row bartitre" style="margin-top: 15px">
+        <div class="col-md-12 titre-1">
+            <div  style="text-align: center; padding:5px">
+                <a class="tit-size" style="margin-top: 0px !important;color:white;text-decoration: none">{{ compte.intitule }}</a>
+                
+                <div class="suppr" >
+                    <a style="margin-bottom:50px !important; color:white;" href="{{ path('compte.supprimer.confirmer', {id:compte.id}) }}">
+                        supprimer
+                    </a>
+                </div>
+                <div class="clo" >
+                    <a style="color:white;" href="{{ path('compte.cloturer.confirmer', {id:compte.id}) }}">
+                        cloturer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form style="padding-left: 0px !important; padding-right:0px !important;" method="POST" action="{{ path('compte.valider.budget', {id:compte.id}) }}" >
+    <div class="row">
+        <div class="budget">
+            <div class="col-md-12">
+                <div style="text-align:left; padding:5px">
+                    <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none">Budget :</a>
+                        
+                        <!--
+                        <form style="padding-left: 0px !important; padding-right:0px !important" method="POST" action="{{ path('compte.valider.budget', {id:compte.id}) }}" >
+            <div class="col-md-6">
+                <h2 style="color:white; margin-bottom: 0px !important;padding: 15px;margin-top: 0px !important">Budget :</h2>
+            </div>
+            <div class="col-md-3" style="padding: 15px">
+                <input style="height:30px" type="text" name="montant" value="{{ compte.lebudget }}" autofocus >
+            </div>
+  
+            <div class="col-md-3" style="padding: 15px" >
+                <button style="height:30px" "type="submit"  >Valider
+                </button>
+            </div>
+              </form>-->
+                    <div class="modif">
+                        <button style="border:none; background-color: transparent; padding-left: 0px" type="submit">
+                            valider
+                        </button>
+                    </div>
+                    <div style="width:fit-content; float:right;">
+                        <input style="height:22px;width:100px ;margin-top: 5px;text-align: right" type="number" 
+                               step="0.1" name="montant" value="{{ compte.lebudget }}" autofocus >
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    </form>
+    <div class="row">
+            <div class="depense">
+                <div class="col-md-12">
+                    <div style="text-align:left; padding:5px">
+                        <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none">Dépenses :</a>
+                        <div class="modif">
+                            <a href="{{ path('compte.ajouter.depense', {id:compte.id}) }}">
+                                ajouter
+                            </a>
+                        </div>
+                        <div style="width:fit-content; float:right;">
+                            <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none">- {{ compte.totaldepense }} €</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="ea_table globe" style="padding-left: 0px !important;padding-right: 0px !important">
+                <thead>
+                    <tr  class="mrg-right-15">
+                        <th>Libelle</th>
+                        <th>Date</th>
+                        <th>Montant</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if compte.totalDepense != null %}
+                    {% for depense in compte.depenses %} 
+                    <tr>
+                        <td>{{ depense.libelle }}</td>
+                        <td>{{ depense.ladate }}</td>
+                        <td>{{ depense.montant }} €</td>
+                        <td style="padding-top:11px">
+                            <div class="col-md-12">
+                                <div style="text-align:left; padding:5px">
+                                    <a  style="margin-top: 0px !important;text-decoration: none" href="{{ path('compte.modifie.depense', {id:depense.id}) }}">
+                                        modifier
+                                    </a>
+                                    <div style="width:fit-content; float:right;">
+                                        <a title="supprimer" style="margin-top: 0px !important;text-decoration: none" href="{{ path('compte.supprimer.depense', {id:depense.id}) }}">
+                                            x
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--
+                            <div class="col-md-6">
+                            <a style="background-color: white;border-color: transparent;
+                                   font-size:25px; color: #337ab7; padding: 0; margin-left: 20px; background-color: transparent"
+                                   href="{{ path('compte.modifie.depense', {id:depense.id}) }}">></a>
+                            </div>
+                                   <div class="col-md-6" style="text-align: end">  
+                            <a style="background-color: white;border-color: transparent;
+                                   font-size:25px; color: #337ab7; padding: 0; margin-left: 20px; background-color: transparent; text-align: end"
+                                   href="{{ path('compte.supprimer.depense', {id:depense.id}) }}">X</a>
+                                   </div>-->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>pas de dépenses</td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <a href="{{ path('compte.ajouter.depense', {id:compte.id}) }}">
+                                    ajouter
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+    </div>
+    {% if compte.lebudget != 0 %}
+    <div class="row">
+        <div class="total">
+            <div class="col-md-12">
+                <div style="text-align:left; padding:5px">
+                    <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none">Total :</a>
+                    <div class="modif">
+                        <a style="color:transparent">
+                         
+                        </a>
+                    </div>
+                    <div style="width:fit-content; float:right;">
+                        <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none">{{ compte.total }} €</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="total">
+            <div class="col-md-12">
+                <div style="text-align:left; padding:5px">
+                    <a class="budget-size" style="margin-top: 0px !important;color:white;text-decoration: none; color: transparent">Total :</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row" style="text-align: end; margin-top: 15px">
+            <a>
+               modifié le : {{ compte.ladatemodifie }}
+            </a>
+            
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        
+<script language="javascript">
+function displayDivInfo(text){
+    if(text){
+        //Détection du navigateur
+        is_ie = (navigator.userAgent.toLowerCase().indexOf("msie") != -1) && (navigator.userAgent.toLowerCase().indexOf("opera") == -1);
+         
+        //Création d'une div provisoire
+        var divInfo = document.createElement('div');
+        divInfo.style.position = 'absolute';
+        document.onmousemove = function(e){
+            x = (!is_ie ? e.pageX-window.pageXOffset : event.x+document.body.scrollLeft);
+            y = (!is_ie ? e.pageY-window.pageYOffset : event.y+document.body.scrollTop);
+            divInfo.style.left = x+15+'px';
+            divInfo.style.top = y+15+'px';
+        }
+        divInfo.id = 'divInfo';
+        divInfo.innerHTML = text;
+        document.body.appendChild(divInfo);
+    }
+    else{
+        document.onmousemove = '';
+        document.body.removeChild(document.getElementById('divInfo'));
+    }
+}
+</script>
+
+{% endblock %}
+

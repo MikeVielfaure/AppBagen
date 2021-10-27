@@ -1,0 +1,172 @@
+{% extends "layouts/base.html.twig" %}
+{% block stylesheets %}
+    <link href="http://localhost/bagen/style/identification.css" rel="stylesheet">
+{% endblock %}
+{% block body %}   
+<div class="container">
+    
+    <div id="overlay" class="overlay">
+        <div id="popup" class="popup" style="width:fit-content; text-align: center">
+            <form id="formmdp" method="POST" action="{{ path('identification.oublie') }}">
+            <div>
+            <h2 style="margin-top: 0px !important">
+                Adresse mail du compte :
+            </h2>
+            </div>
+            <div style="margin-bottom: 10px">
+                
+                <input type="text" name="email" value="{{ app.session.get(constant('App\\Controller\\IdentificationController::OLD_MAIL')) }}" 
+                       autofocus >
+                
+            </div>
+            </form>
+            <div>
+                <a type="button" onclick="submitMDP()" class="btn btn-primary">Valider</a>
+                <a type="button" onclick="displayMDPOff()" class="btn btn-annuler" style="margin-left: 15px">annuler</a>
+            </div>
+        </div>
+    </div>
+    
+    
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default" style="box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-moz-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-webkit-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);">
+            <div class="panel-heading">
+                <h3 class="panel-title">Identification utilisateur</h3>
+            </div>
+            <div id="mdpO" class="panel-body option2">
+                <form name="form" id="form" role="form" method="post" 
+                      action="#">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                                <input class="form-control" 
+                                       placeholder="Mail"
+                                       name="mail" 
+                                       type="text" 
+                                       value="{{ app.session.get(constant('App\\Controller\\IdentificationController::OLD_MAIL')) }}" 
+                                       maxlength="45"
+                                       style="z-index: 0"
+                                       required 
+                                       autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                                <input class="form-control"
+                                       placeholder="Mot de passe" 
+                                       name="password"
+                                       type="password" 
+                                       maxlength="45" 
+                                       style="z-index: 0"
+                                       required>
+                                <input type="hidden" 
+                                       name="csrf_token" 
+                                       value="{{ csrf_token('login_form') }}" >
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="remember_me">
+                                        <input type="checkbox" name="_remember_me" id="remember_me">
+                                        Garder ma session ouverte
+                                    </label>
+                                </div>
+                                <div class="col-md-6 tar">
+                                    <a type="button" onclick="displayMDPOn()" class="mdp">Mot de passe oublié</a>
+                                </div>
+                            </div>
+                        <input class="btn btn-lg btn-primary btn-block"
+                               type="submit" 
+                               value="Se connecter">
+                        
+                    </fieldset>
+                </form>
+            </div>
+                            
+            <div id="mdpA" class="panel-body option1">
+                    
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                                <input class="form-control" 
+                                       placeholder="Mail"
+                                       name="mail" 
+                                       type="text" 
+                                       value="{{ app.session.get(constant('App\\Controller\\IdentificationController::OLD_MAIL')) }}" 
+                                       maxlength="45"
+                                       style="z-index: 0"
+                                       required 
+                                       >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                                <input class="form-control"
+                                       placeholder="Mot de passe" 
+                                       name="password"
+                                       type="password" 
+                                       maxlength="45" 
+                                       style="z-index: 0"
+                                       required>
+                                
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="remember_me">
+                                        <input type="checkbox" name="_remember_me" id="remember_me">
+                                        Garder ma session ouverte
+                                    </label>
+                                </div>
+                                <div class="col-md-6 tar">
+                                    <a type="button" onclick="displayMDPOn()" class="mdp">Mot de passe oublié</a>
+                                </div>
+                            </div>
+                        <input class="btn btn-lg btn-primary btn-block"
+                               type="submit" 
+                               value="Se connecter">
+                        
+                    </fieldset>
+            </div>
+                            
+                            
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function displayMDPOn(){
+         document.getElementById('overlay').className="overlayb";
+         document.getElementById('mdpA').className="option2 panel-body";
+         document.getElementById('mdpO').className="option1 panel-body";
+        }
+        function displayMDPOff(){
+         document.getElementById('overlay').className="overlay";
+         document.getElementById('mdpA').className="option1 panel-body";
+         document.getElementById('mdpO').className="option2 panel-body";
+        }
+        
+        function submitMDP(){
+            document.getElementById('formmdp').submit();
+        }
+    </script>
+{% endblock %}
+

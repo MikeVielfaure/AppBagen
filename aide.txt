@@ -1,0 +1,4 @@
+//autorisation et identification
+https://www.kaherecode.com/tutorial/creer-un-blog-avec-symfony-4-authentification-et-autorisation-2
+https://www2.itroom.fr/authentification-utilisateur-sous-symfony-4/
+https://www.youtube.com/watch?v=wCvGbv6E0AI&ab_channel=LESTEACHERSDUNET

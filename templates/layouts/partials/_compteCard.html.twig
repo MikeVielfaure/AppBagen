@@ -1,0 +1,77 @@
+
+<div class="col-md-4">
+    <div class="panel panel-default" style="box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+        -moz-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+        -webkit-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);">
+        <!--<div>
+            {% if compte.ladatecloture != " " %}
+            <div style="text-align: center">
+                <a style="color:red">cloturé le : {{ compte.ladatecloture }} </a>
+            </div>
+            {% else %}
+            <div style="text-align: center">
+                <a>dernière modification le : {{ compte.ladatemodifie }} </a>
+            </div>
+            {% endif %}
+        </div>-->
+        <div style="text-align: center">
+            <h2>{{ compte.intitule }}</h2>
+        </div>
+        {% if compte.lebudget != 0 and compte.totalDepense != null %}
+            {% if compte.pourcentageBudgetDepense >= 100 %}
+                <div class="chart-101 x-101">
+                    <p>{{compte.pourcentageBudgetDepense}}%</p>
+                </div>
+                <div style="text-align : center">
+                    <a>Budget : {{ compte.lebudget }} €</a><br/>
+                    <a>Dépenses : {{ compte.totalDepense }} €</a><br/>
+                    <a style="color:red">Total : {{ compte.total }} €</a>
+                </div>
+            {% else %}
+                <div class="chart x-{{compte.pourcentageBudgetDepense}}">
+                    <p>{{compte.pourcentageBudgetDepense}}%</p>
+                </div>
+                <div style="text-align : center">
+                    <a>Budget : {{ compte.lebudget }} €</a><br/>
+                    <a>Dépenses : {{ compte.totalDepense }} €</a><br/>
+                    <a>Total : {{ compte.total }} €</a>
+                </div>
+            {% endif %}
+        {% else %}
+            {% if compte.lebudget != 0 %}
+                <div style="text-align : center">
+                    <a>Budget : {{ compte.lebudget }} €</a><br/>
+                    <a>Dépenses : </a> <a style="color:#002752; text-decoration: underline #002752" href="{{ path('compte.ajouter.depense', {id:compte.id}) }}">ajouter</a>
+                </div>
+            {% endif %}
+            {% if compte.totalDepense != null %}
+                <div style="text-align : center">
+                    <a>Dépenses : {{ compte.totalDepense }} €</a><br/>
+                    <a>Budget : </a> <a style="color:#002752; text-decoration: underline #002752" href="{{ path('compte.modifie.budget', {id:compte.id}) }}">ajouter</a>
+                </div>
+            {% endif %}
+            {% if compte.totalDepense == null and compte.lebudget == 0 %}
+                <div style="text-align : center">
+                    <a>Dépenses : </a> <a style="color:#002752; text-decoration: underline #002752" href="{{ path('compte.ajouter.depense', {id:compte.id}) }}">ajouter</a> <br/>
+                    <a>Budget : </a> <a style="color:#002752; text-decoration: underline #002752" href="{{ path('compte.modifie.budget', {id:compte.id}) }}">ajouter</a>
+                </div>
+            {% endif %}
+        {% endif %}   
+
+        {% if compte.ladatecloture != " "%}
+        <div style="text-align: center; margin-bottom: 10px">
+            <a  href="{{ path('cloture', {id:compte.id}) }}">voir</a>
+        </div>
+        <div style="text-align: center;margin-bottom: 10px;color:red; font-style: italic;">
+                <a>cloturé le : {{ compte.ladatecloture }} </a>
+        </div>
+        {% else %}
+        <div style="text-align: center; margin-bottom: 10px">
+            <a href="{{ path('compte', {id:compte.id}) }}">voir</a>
+        </div>
+        <div style="text-align: center; margin-bottom: 10px; font-style: italic; color:#c0c0c0">
+                <a>dernière modification le : {{ compte.ladatemodifie }} </a>
+        </div>
+        {% endif %}
+    </div>
+</div>

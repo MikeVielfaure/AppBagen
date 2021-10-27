@@ -1,0 +1,131 @@
+
+.bartitre{
+    background-color : #007bff; 
+    border-radius: 10px 10px 0px 0px;
+    border-top: solid;
+    border-top-color: #007bff;
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff;
+}
+
+.titre-1{
+    color:white;
+    text-align: center;
+}
+
+.suppr{
+    width:fit-content; 
+    float:right;
+    margin-top: 15px;
+}
+
+.clo{
+    width:fit-content; 
+    float:right;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+.modif{
+    width:fit-content; 
+    float:right;
+    margin-left: 15px;
+    margin-top: 6px;
+    width:55px;
+    
+}
+
+.img{
+    width: 20px;
+}
+
+.bc-blue-1{
+   
+    background-color:#77b5fe;
+}
+
+.bc-blue-2{
+    background-color :#337ab7
+}
+
+.depense{
+    background-color: #77b5fe; 
+    padding:0px !important;
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff;
+}
+
+.budget{
+    background-color: #007bff; 
+    padding:0px !important;
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff;
+}
+
+.total{
+    background-color: #007bff; 
+    padding:0px !important;
+    border-radius: 0px 0px 10px 10px;
+    border-bottom: solid;
+    border-bottom-color: #007bff;
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff;
+}
+
+.globe{
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff;
+}
+
+.tit-size{
+   font-size:32px; 
+}
+
+.budget-size{
+    font-size:22px; 
+}
+
+.depense-size{
+    font-size:22px; 
+}
+
+.total-size{
+    font-size:22px; 
+}
+
+.budget-form{
+    background-color: #77b5fe; 
+    padding:0px !important;
+    border-left: solid;
+    border-left-color: #007bff;
+    border-right: solid;
+    border-right-color: #007bff; 
+}
+
+@media (max-width: 800px) {
+  input {
+    width:50px;
+  }
+  
+  button{
+      margin-left: 5px !important;
+  }
+  
+  td{
+      font-size:10px;
+  }
+}
+
+tr{
+    height:56px;
+}

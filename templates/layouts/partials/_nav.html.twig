@@ -1,0 +1,86 @@
+<div style="box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+-moz-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+-webkit-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75); position:relative">
+<!--<div style="box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-moz-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-webkit-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);">-->
+<div style="z-index: 9999;
+ position: fixed;
+ top: 0; background-color: white;
+ width:100%;
+ box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+-moz-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);
+-webkit-box-shadow: 0px 0px 10px 4px rgba(131, 129, 129, 0.75);">
+<div class="container">
+<nav>
+    <div class="col-md-6">
+    <img class="fit-picture" style="padding:10px 15px 0px 15px;justify-content: flex-start !important;object-fit: cover; "
+                 src="http://localhost/bagen/drawable/logo4_petit_50.png"
+                 alt="Grapefruit slice atop a pile of other slices"> 
+    </div>
+    <div class="col-md-6">
+    <ul class="nav justify-content-end">
+        {% if app.user %}
+        <li class="nav-item" style="text-align: center">
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/home1.png"
+                 alt="Grapefruit slice atop a pile of other slices">
+            <a class="nav-link " style="padding-top: 0px" aria-current="page" href="{{ path('accueil.utilisateur') }}">Home</a>
+        </li>
+        <li class="nav-item" style="text-align: center">
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/logout6.png"
+                 alt="Grapefruit slice atop a pile of other slices">
+            <a class="nav-link" style="padding-top: 0px" href="{{ path('logout') }}">Logout</a>
+        </li>
+        <li class="nav-item" style="text-align: center">
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/profil3.png"
+                 alt="Grapefruit slice atop a pile of other slices">
+            <a class="nav-link" style="padding-top: 0px" href="{{ path('profil') }}">Profil</a>
+        </li>
+        {% else %}
+        <li class="nav-item" style="text-align: center" >
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/home1.png"
+                 alt="Grapefruit slice atop a pile of other slices"> 
+            <a class="nav-link " style="padding-top: 0px" aria-current="page" href="{{ path('accueil') }}">Home</a>
+        </li>
+        <li class="nav-item" style="text-align: center">
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/login1.png"
+                 alt="Grapefruit slice atop a pile of other slices">
+            <a class="nav-link" style="padding-top: 0px" href="{{ path('identification') }}">Log in</a>
+        </li >
+        <li class="nav-item" style="text-align: center">
+            <img class="fit-picture" style="padding:10px 15px 0px 15px;"
+                 src="http://localhost/bagen/drawable/register2.png"
+                 alt="Grapefruit slice atop a pile of other slices">
+            <a class="nav-link" style="padding-top: 0px" href="{{ path('register') }}">Register</a>
+        </li>
+        {% endif %}
+    </ul>
+    </div>
+</nav>
+</div>
+</div>
+    </div>
+ 
+    <!--
+    <nav>   
+    <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+    </nav>
+    -->

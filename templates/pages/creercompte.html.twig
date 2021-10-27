@@ -1,0 +1,59 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+    <div class="row" style="text-align: center; margin-bottom: 15px">
+    <h1 style="color:#337ab7">Créer Nouveau Compte</h1>
+    </div>
+    {{ form_start(registrationForm) }}
+    
+    <div class="row" style="position: relative">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default" style="box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-moz-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+-webkit-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);">
+            <div class="panel-heading">
+                <h3 class="panel-title">Enregistrer Nouveau Compte</h3>
+            </div>
+            <div class="panel-body" style="padding: 30px">
+                   
+                        <div class="form-group">
+                            <div>
+                                {{ form_label(registrationForm.intitule) }}
+                                <a>*</a>
+                                <div class="cl-r">
+                                {{ form_errors(registrationForm.intitule) }}
+                                </div>
+                                {{ form_widget(registrationForm.intitule,{'attr': {'class': 'form-control'}}) }}
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                {{ form_label(registrationForm.monBudget) }}
+                                <div class="cl-r">
+                                {{ form_errors(registrationForm.monBudget) }}
+                                </div>
+                                {{ form_widget(registrationForm.monBudget,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                            
+                            <div style="text-align:center; margin-top: 30px">
+                                <input type="submit" value="Register" class="btn btn-lg btn-primary" formnovalidate >
+                            </div>
+                            <div>
+                                <a style="font-style: italic">* champ obligatoire</a>
+                            </div>
+                                
+                        </div>
+
+                            </div>
+                            
+                       
+                     
+                    
+            </div>
+        </div>
+    
+    {{ form_end(registrationForm) }} 
+    </div>
+{% endblock %}
+

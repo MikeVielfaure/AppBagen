@@ -1,0 +1,17 @@
+.tt-menu{
+    background-color : white;
+    width : 200px;
+    color :#337ab7;
+
+        
+}
+
+.tt-suggestion:hover{
+    background-color: lightblue;
+   
+}
+
+.tt-suggestion{
+    padding-left: 12px;
+}
+

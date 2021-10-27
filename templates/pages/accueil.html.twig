@@ -1,0 +1,98 @@
+{% extends "layouts/base.html.twig" %}
+{% block stylesheets %}
+    <link href="http://localhost/bagen/style/accueil.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class='container'>
+        <div class="row" >
+            <h1 style="color:#337ab7">
+                Bienvenue
+            </h1>
+        </div>
+        
+        <div class="row" style="text-align: center">
+            <div class="bar-1 col-md-10 col-md-offset-1">
+            <div class="bar-2">
+                <div class="bar-3">
+                    <a class="bar-4">
+                        Bagen est un service gratuit de gestion de dépenses, toujours en évolution pour répondre au mieux aux attentes de ces utilisateurs.<br>
+                        
+                    </a>
+                    <a class="bar-4">
+                        Pour en profiter cliquez 
+                    </a>
+                    {% if app.user %}
+                        <a class="ici" type='button' href="{{ path('accueil.utilisateur') }}">
+                            ici
+                        </a>
+                    {% else %}
+                        <a class="ici" type='button' href="{{ path('register') }}">
+                            ici
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        </div> 
+
+        <!--
+        <div class="row" >
+            <h2 style="color:#337ab7">
+                Pour chaque occasion, un compte...
+            </h2>
+        </div>-->
+        
+        <div class="row" >
+            <div>
+                <a style="color:#337ab7; font-size:24px">
+                    Qu'est-ce que Bagen : c'est la possibilité de...
+                </a>
+            </div>
+        </div>
+        <div class="row" style='margin-top: 20px;'>
+            <div class="col-md-12">
+                {%   include['layouts/partials/card-1.html.twig']  %}
+                {%   include['layouts/partials/card-2.html.twig']  %}
+                {%   include['layouts/partials/card-3.html.twig']  %}
+            </div>
+        </div>
+        <!--<div class="row" >
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    <a class="pos-1">
+                        ...créer des comptes pour chaque occasion...
+                    </a>
+                </div>
+                <div class='col-md-4'>
+                    <a class="pos-1">
+                        ...suivre vos dépenses et les modifier...
+                    </a>
+                </div>
+                <div class='col-md-4'>
+                    <a class="pos-1">
+                        ...installer un widget sur vos smartphones...
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    <img class="img-size"
+                            src="http://localhost/bagen/drawable/creercompte.png"
+                            alt="aaa">
+                </div>
+                <div class='col-md-4'>
+                    <img class="img-size"
+                            src="http://localhost/bagen/drawable/affichercompte3.png"
+                            alt="aaa">
+                </div>
+                <div class='col-md-4'>
+                    <img class="img-size"
+                            src="http://localhost/bagen/drawable/androidios2.png"
+                            alt="aaa">
+                </div>
+            </div>
+        </div>-->
+    </div>
+{% endblock %}

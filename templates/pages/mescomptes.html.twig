@@ -1,0 +1,381 @@
+{% extends "layouts/base.html.twig" %}
+{% block stylesheets %}
+    <link href="http://localhost/bagen/style/diagramme_pourcentage.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/pagination_mescomptes.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/searchbar.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+{% if lesComptes|length == 0 %}
+    <div class="container">
+        <div class="row">
+            <div>
+                 <h3 style="color:#337ab7" >
+                     Ancun compte :  
+                 </h3>
+            </div>
+            <div>
+                 <a>cliquez</a><a href="{{ path('creer.compte.nouveau') }}"> ici </a><a>pour en créer un</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="container">
+    <div class="row bartitre" >
+        <div class="col-md-4">
+        <h1 style="color:white; margin-bottom: 15px">
+            Mes Comptes : 
+        </h1>
+        </div>
+        <div class="col-md-4 pr">
+        <div class="pa centre">
+        <form id="myform" method="POST" action="{{ path('mescomptes.change') }}" >
+        <label class="txt" >Nombre par page :
+        <select class="txt-select" onChange="change(this.value);" name="nbr" id="nbr-select">
+            <option value="">-</option>
+            <option value="1">1</option>
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="30">30</option>
+            <option value="90">90</option>
+        </select>
+        </label>
+        </form>
+        </div>
+        </div>
+        <div class="col-md-4" style="text-align:right" >
+        <div style="display:inline-block">
+        <div style="margin:20px 0px 15px; width:fit-content">
+        <div id="the-basics">
+                  <form class="form-inline" method="POST" action="{{ path('mescomptes.search') }}" >
+                <input class="form-control mr-sm-2 typeahead " 
+                       name="intitule"
+                       id="intitule"
+                       style="width:200px; margin-right: 5px" type="search"
+                       autocomplete="off" 
+                       />
+                <button id="btnSearch" class="btn" type="submit" style="vertical-align: top;">Search
+                </button>  
+            </form>
+        </div>
+        </div>
+        </div>
+        </div>
+                
+    </div>
+    
+   {% if "/search" in app.request.pathinfo  %}
+       {% if app.session.get('nbrcompte') == null  %}
+           {% set nbrparpage = 6 %}
+       {% else %}
+           {% set nbrparpage = app.session.get('nbrcompte') %}
+       {% endif %}
+    {% set nombre = (((liste|length)/nbrparpage))|round(0,'ceil')  %}
+    {% if nombre <= 3 %}
+    <div style="text-align: center"  >
+        <div style="display:inline-block">
+            <div class="row">
+                {% for i in range(1,nombre) %}
+                    {% if i == numeropage %}
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:i}) }}">
+                            <p class="no-marg">{{ i }}</p>
+                        </a>
+                    {% else %}
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:i}) }}">
+                            <p class="no-marg">{{ i }}</p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+        <div style="text-align:center">
+            <div style="display:inline-block">
+                <div class="row"  >
+                    {% if numeropage == 1 %}
+                        <a class="rond"  href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                            <p class="no-marg">{{ numeropage }}</p>
+                        </a>
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+1}) }}">
+                            <p class="no-marg">{{ numeropage+1 }}</p>
+                        </a>
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+2}) }}">
+                            <p class="no-marg">{{ numeropage+2 }}</p>
+                        </a>
+                    {% else %}
+                        {% if numeropage == nombre-1 %}
+                            <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-2}) }}">
+                                <p class="no-marg">{{ numeropage-2 }}</p>
+                            </a>
+                            <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                <p class="no-marg">{{ numeropage-1 }}</p>
+                            </a>
+                            <a class="rond select" href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                                <p class="no-marg">{{ numeropage }}</p>
+                            </a>
+                        {% else %}
+                            {% if numeropage == nombre %}
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-3}) }}">
+                                    <p class="no-marg">{{ numeropage-3 }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-2}) }}">
+                                    <p class="no-marg">{{ numeropage-2 }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                    <p class="no-marg">{{ numeropage-1 }}</p>
+                                </a>
+                            {% else %}
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                    <p class="no-marg">{{ numeropage-1 }}</p>
+                                </a>
+                                <a class="rond select" href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                                    <p class="no-marg">{{ numeropage }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+1}) }}">
+                                    <p class="no-marg">{{ numeropage+1 }}</p>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <div style="width:fit-content;">
+                    <div class="rond-gr" style="text-align:center;">
+
+
+                        <form method="POST" action="{{ path('mescomptes.page', {numeropage:numeropage}) }}" >
+                            <input style='width:1.5em; border-color: transparent; background-color: transparent' type="text" name="numero" placeholder="..." autofocus >
+                            <button  style="width:0px !important; height:0px !important; display: none" type="submit"  >
+                            </button>
+                        </form>
+
+                    </div>
+                    </div>
+                    {% if numeropage == nombre %}
+                        <a class="rond select" href="{{ path('mescomptes.page', {numeropage:nombre}) }}">
+                            <p class="no-marg">{{ nombre }}</p>
+                        </a>
+                    {% else %}
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:nombre}) }}">
+                            <p class="no-marg">{{ nombre }}</p>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+       
+       
+       
+   {% else %}
+   {% if app.session.get('nbrcompte') == null  %}
+           {% set nbrparpage = 6 %}
+       {% else %}
+           {% set nbrparpage = app.session.get('nbrcompte') %}
+       {% endif %}
+    {% set nombre = (((lesComptes|length)/nbrparpage))|round(0,'ceil')  %}
+    {% if nombre <= 3 %}
+    <div style="text-align: center"  >
+        <div style="display:inline-block">
+            <div class="row">
+                {% for i in range(1,nombre) %}
+                    {% if i == numeropage %}
+                        <a class="rond select" href="{{ path('mescomptes.page', {numeropage:i}) }}">
+                            <p class="no-marg">{{ i }}</p>
+                        </a>
+                    {% else %}
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:i}) }}">
+                            <p class="no-marg">{{ i }}</p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div style="text-align:center">
+            <div style="display:inline-block">
+                <div class="row"  >
+                    {% if numeropage == 1 %}
+                        <a class="rond select"  href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                            <p class="no-marg">{{ numeropage }}</p>
+                        </a>
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+1}) }}">
+                            <p class="no-marg">{{ numeropage+1 }}</p>
+                        </a>
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+2}) }}">
+                            <p class="no-marg">{{ numeropage+2 }}</p>
+                        </a>
+                    {% else %}
+                        {% if numeropage == nombre-1 %}
+                            <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-2}) }}">
+                                <p class="no-marg">{{ numeropage-2 }}</p>
+                            </a>
+                            <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                <p class="no-marg">{{ numeropage-1 }}</p>
+                            </a>
+                            <a class="rond select" href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                                <p class="no-marg">{{ numeropage }}</p>
+                            </a>
+                        {% else %}
+                            {% if numeropage == nombre %}
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-3}) }}">
+                                    <p class="no-marg">{{ numeropage-3 }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-2}) }}">
+                                    <p class="no-marg">{{ numeropage-2 }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                    <p class="no-marg">{{ numeropage-1 }}</p>
+                                </a>
+                            {% else %}
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage-1}) }}">
+                                    <p class="no-marg">{{ numeropage-1 }}</p>
+                                </a>
+                                <a class="rond select" href="{{ path('mescomptes.page', {numeropage:numeropage}) }}">
+                                    <p class="no-marg">{{ numeropage }}</p>
+                                </a>
+                                <a class="rond" href="{{ path('mescomptes.page', {numeropage:numeropage+1}) }}">
+                                    <p class="no-marg">{{ numeropage+1 }}</p>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <div style="width:fit-content;">
+                    <div class="rond-gr" style="text-align:center;">
+
+
+                        <form method="POST" action="{{ path('mescomptes.page', {numeropage:numeropage}) }}" >
+                            <input style='width:1.5em; border-color: transparent; background-color: transparent' type="text" name="numero" placeholder="..." autofocus >
+                            <button  style="width:0px !important; height:0px !important; display: none" type="submit"  >
+                            </button>
+                        </form>
+
+                    </div>
+                    </div>
+                    {% if numeropage == nombre %}
+                        <a class="rond select" href="{{ path('mescomptes.page', {numeropage:nombre}) }}">
+                            <p class="no-marg">{{ nombre }}</p>
+                        </a>
+                    {% else %}
+                        <a class="rond" href="{{ path('mescomptes.page', {numeropage:nombre}) }}">
+                            <p class="no-marg">{{ nombre }}</p>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% endif %}
+
+    
+    
+    <div class="row">
+     {% set index = 1 %}
+     {% for compte in lesComptes %}
+        {% if index > (numeropage-1)*nbrparpage and index <= numeropage*nbrparpage  %}
+        {%   include['layouts/partials/_compteCard.html.twig'] with [{'compte': compte}] %}
+        {% endif %}
+        {% set index = index+1 %}
+    {% endfor %}  
+ </div>
+ 
+ <!-- gère le nombre de compte affiché sur le nombre total de compte -->
+    {% if "/search" not in app.request.pathinfo %}
+    <div style="text-align: right" >
+        <div style="display:inline-block">
+            {% set session = app.session.get('nbrcompte') %}
+            {% if (session*numeropage)>lesComptes|length  %}
+            <a>{{ (session*numeropage)- ((session*numeropage)-lesComptes|length)}}/{{ lesComptes|length }}</a>
+            {% else %}
+            <a>{{ (session*numeropage)}}/{{ lesComptes|length }}</a>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align: right" >
+        <div style="display:inline-block">
+            <a>1/1</a>
+        </div>
+    </div>
+    {% endif %}
+        
+</div>
+    
+ <!--{% if lesComptes|length > 0 %}
+ <div class="row">
+     <div style="text-align: end;">
+         <a href="{{ path('mescomptes.page.moins',{numeropage:numeropage}) }}" style="font-size:35px"><</a>
+         <a style="font-size:30px">{{ numeropage }}</a>
+         <a href="{{ path('mescomptes.page.plus',{numeropage:numeropage}) }}" style="font-size:35px">></a>
+     <div>
+ </div>
+{% endif %}-->
+{% endif %}
+    
+{% endblock %}
+    
+    {% block javascripts %}
+    
+    <script type="text/javascript">
+        function change(param){
+            document.getElementById("myform").submit();
+	}
+    </script>
+    <script>
+        var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+          var matches, substringRegex;
+
+          // an array that will be populated with substring matches
+          matches = [];
+
+          // regex used to determine if a string contains the substring `q`
+          substrRegex = new RegExp(q, 'i');
+          
+          
+
+          // iterate through the pool of strings and for any string that
+          // contains the substring `q`, add it to the `matches` array
+          $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+              matches.push(str);
+            }
+          });
+
+          cb(matches);
+//var myval = $('.typeahead').typeahead('val');
+//$('#intitule').val("eee");
+
+        };
+      };
+
+        
+        var myJsonString = [];
+        
+        {% for un in liste %}
+           myJsonString.push("{{un}}");
+          
+       {% endfor %} 
+           
+            
+        //for (i=0; i<maliste.length;i++){
+            //myJsonString.push(maliste[i]);
+       // }
+
+        $('#the-basics .typeahead').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+            
+          name: 'intitule',
+          source: substringMatcher(myJsonString)
+        });
+        
+        
+    </script>
+{% endblock %}
+            
+ 

@@ -1,0 +1,51 @@
+
+.fleche-droite{
+    float:right;
+    margin-right: 80px;
+    font-size:50px;
+    margin-top: -35px
+}
+
+.fleche-gauche{
+    float:left;
+    margin-left: 80px;
+    font-size:50px;
+    margin-top: -35px
+}
+
+.fleche-droite:hover{
+    text-decoration: none;
+}
+
+.fleche-gauche:hover{
+    text-decoration: none;
+}
+
+.fleche-gauche-desactive{
+    float:left;
+    margin-left: 80px;
+    font-size:50px;
+    margin-top: -35px;
+    color: lightslategray;
+}
+
+.fleche-droite-desactive{
+    float:right;
+    margin-right: 80px;
+    font-size:50px;
+    margin-top: -35px;
+    color: lightslategray;
+}
+
+.fleche-gauche-desactive:hover{
+    color: lightslategray;
+    text-decoration: none;
+}
+
+.fleche-droite-desactive:hover{
+    color: lightslategray;
+    text-decoration: none;
+}
+
+
+

@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13 Aug 2021, 14:40:46
+    Author     : vielf
+*/
+
+.ea_table {
+  border: 1px solid #ddd;
+  display: block;
+  background: #fff;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  float: left;
+  height:auto;
+  width: 100%;
+}
+
+.ea_table tbody, thead {
+  flex-direction: column;
+  display: flex;
+}
+
+.ea_table tbody {
+  min-height: 20px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.ea_table thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.ea_table tr {
+  display: flex;
+}
+
+
+.ea_table tbody tr:nth-child(2n+1) {
+  background: #f8f8f8;
+  }
+
+.ea_table td, .ea_table th {
+  text-align: left;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.mrg-right-15{
+    margin-right: 15px;
+}
+
+
+

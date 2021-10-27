@@ -1,0 +1,56 @@
+.tar{
+    text-align: right;
+}
+
+.mdp:hover{
+    text-decoration: underline;
+}
+
+.mdp{
+    
+}
+
+.overlay {
+    position: fixed;
+    left: 0px;
+    top:0px;
+    background-color: rgba(0,0 ,0 , 0.5);
+    width: 100%;
+    height: 100%;
+    z-index:1;
+    display:none;
+}
+
+.overlayb {
+    position: fixed;
+    left: 0px;
+    top:0px;
+    background-color: rgba(0,0 ,0 , 0.5);
+    width: 100%;
+    height: 100%;
+    z-index:1;
+    display:block;
+}
+
+.popup{
+    margin: 10% auto;
+    width : 70%;
+    background-color: rgb(243, 243, 243);
+    padding: 1em;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.btn-annuler {
+    color: #fff;
+    background-color: #fa2f2f;
+    border-color: #e64949;
+}
+
+.option1{
+    display:none;
+}
+
+.option2{
+    display:block;
+}

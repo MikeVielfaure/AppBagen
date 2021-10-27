@@ -1,0 +1,88 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block stylesheets %}
+            
+{% endblock %}
+
+{% block body %} 
+    <!--
+<div class="row" style="text-align: center; margin-bottom: 15px">
+      <h1 style="color:#337ab7">Contacter :</h1>
+</div>
+    
+<div class="modal shadow-1 white falling" id="modal-contact" data-ax="modal">
+  <div class="modal-header">Contactez-nous :</div>
+
+  <div class="divider"></div>
+
+  <div class="modal-content">
+   
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="modal-footer">
+    <button data-target="modal-contact" class="ml-auto btn shadow-1 rounded-1 small primary modal-trigger">Fermer</button>
+  </div>
+</div>
+
+<button class="btn rounded-1 primary press modal-trigger" data-target="modal-contact">Contacter</button>-->
+    <div class="container">
+    <div class="row" style="text-align: center; margin-bottom: 15px">
+      <h1 style="color:#337ab7">Contacter :</h1>
+    </div>
+    {{ form_start(form) }}
+        <div class="row" style="position: relative">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default" style="box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+                        -moz-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);
+                        -webkit-box-shadow: 0px 0px 10px 0px rgba(26, 26, 26, 0.08);">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Renseignements d'envoi</h3>
+                    </div>
+                    <div class="panel-body" style="padding: 30px">
+                        <div class="form-group">
+                            <div>
+                                {{ form_label(form.titre) }}
+                                <div class="cl-r">
+                                {{ form_errors(form.titre) }}
+                                </div>
+                                {{ form_widget(form.titre,{'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                {{ form_label(form.email) }}
+                                <div class="cl-r">
+                                {{ form_errors(form.email) }}
+                                </div>
+                                {{ form_widget(form.email,{'attr': {'class': 'form-control','value':app.user.mail}}) }}
+                        </div>
+                        <div class="form-group">
+                                {{ form_label(form.message) }}
+                                <div class="cl-r">
+                                {{ form_errors(form.message) }}
+                                </div>
+                                {{ form_widget(form.message,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div style="text-align:center; margin-top: 30px">
+                            <input type="submit" value="Envoyer" class="btn btn-lg btn-primary" formnovalidate >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+   {{ form_end(form) }} 
+    </div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Axentix JS minified version -->
+    <script src="https://cdn.jsdelivr.net/npm/axentix@1.3.3/dist/js/axentix.min.js"></script>
+    <script>
+        let modal = new Axentix.Modal('#modal-contact');
+    </script>
+{% endblock %}
+
+

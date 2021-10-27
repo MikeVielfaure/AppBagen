@@ -1,0 +1,16 @@
+<link href="http://localhost/bagen/style/flash_message.css" rel="stylesheet">
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div id="nav" class="alert alert-{{type}}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<script>
+    setTimeout(function() {
+  document.getElementById('nav').className = "dn";
+},4000);
+</script>
+    

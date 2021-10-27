@@ -1,0 +1,196 @@
+{% extends "layouts/base.html.twig" %}
+{% block stylesheets %}
+    <link href="http://localhost/bagen/style/diagramme_pourcentage.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/searchbar.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/accueilutilisateur.css" rel="stylesheet">
+    <link href="http://localhost/bagen/style/popup_supprimer_compte.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class="container">
+    {% if lesComptes|length == 0 and "/search" in app.request.pathinfo %}
+    <div id="overlay" class="overlay">
+        <div id="popup" class="popup" style="width:fit-content; text-align: center">
+            <div>
+            <h2 style="width:fit-content">
+                Aucun compte trouvé 
+            </h2>
+            </div>
+            <div>
+                <a href="{{ path('accueil.utilisateur') }}" name="fermer" id="fermer" class="btn btn-primary" >Fermer</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+    <div class="row" >
+        <h1 style="color:#337ab7">
+            Bienvenue {{ app.user.prenom }}
+        </h1>
+    </div>
+    <div class="row"  >
+        
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#77b5fe !important; border-radius: 10px; " >
+            <div class="container-fluid" style="padding-left: 0px !important" >
+              <div class="collapse navbar-collapse" style="padding-left: 0px !important" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: white; font-size: 15px; margin-right: 30px" href="{{ path('mescomptes') }}">Mes Comptes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: white; font-size: 15px; margin-right: 30px" >Comptes Partagés</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: white; font-size: 15px; margin-right: 30px" >Comptes clôturés</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: white; font-size: 15px; margin-right: 30px" href="{{ path('creer.compte.nouveau') }}">Créer Compte</a>
+                  </li>
+                </ul>
+                 
+                 
+
+              </div>
+            </div>
+           
+            
+              <div id="the-basics">
+                  <form class="form-inline" method="POST" action="{{ path('accueil.utilisateur.search') }}" >
+                <input class="form-control mr-sm-2 typeahead " 
+                       name="intitule"
+                       id="intitule"
+                       style="width:200px; margin-right: 5px" type="search"
+                       autocomplete="off" 
+                       />
+
+              </div>
+                <button id="btnSearch" class="btn" type="submit">Search</button>  
+            </form>
+        
+        </nav>
+    </div>
+
+     <div class="row" style="margin-bottom: 20px">
+         {% if lesComptes|length > 1 %}
+         <h3 style="color:#337ab7" >
+             Mes dernièrs comptes utilisés : 
+         </h3>
+         {% endif %}
+         {% if lesComptes|length == 1 %}
+         <h3 style="color:#337ab7" >
+             Mon compte : 
+         </h3>
+         {% endif %}
+         {% if lesComptes|length == 0 %}
+         <div>
+         <h3 style="color:#337ab7" >
+             Ancun compte :  
+         </h3>
+         </div>
+         <div>
+            <a>cliquez</a><a href="{{ path('creer.compte.nouveau') }}"> ici </a><a>pour en créer un</a>
+         </div>
+         {% endif %}
+         
+     </div>
+    </div>
+    <div style="position: relative; z-index: 0">
+    <div style="position:absolute;width:100%;top: 50%; z-index: 0">
+        {% if "/search" not in app.request.pathinfo %}
+        <div style="width:100%;">
+            {% if numero == 1 %}
+            <a class="fleche-gauche-desactive"  > < </a>
+            {% else %}
+            <a class="fleche-gauche" href="{{ path('accueil.utilisateur.moins', {numero:numero}) }}" > < </a>
+            {% endif %}
+            
+            {% if numero != liste|length-2 and liste|length > 3 %}
+            <a class="fleche-droite" href="{{ path('accueil.utilisateur.plus', {numero:numero}) }}" > > </a>
+            {% else %}
+                <a class="fleche-droite-desactive" > > </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+  
+    {% if numero == 1 and "/moins" not in app.request.pathinfo %}
+    <div class="container">
+        {% for compte in lesComptes %}
+           {%   include['layouts/partials/_compteCard.html.twig'] with [{'compte': compte}] %}
+       {% endfor %}  
+    </div>
+    {% else %}
+    <div class="container">
+
+    {% for i in range(numero-1, numero+1) %}
+        {%  set compte = lesComptes[i] %}
+         {%   include['layouts/partials/_compteCard.html.twig'] with [{'compte': compte}] %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    
+    
+    
+    
+    </div>
+
+    
+       
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+          var matches, substringRegex;
+
+          // an array that will be populated with substring matches
+          matches = [];
+
+          // regex used to determine if a string contains the substring `q`
+          substrRegex = new RegExp(q, 'i');
+          
+          
+
+          // iterate through the pool of strings and for any string that
+          // contains the substring `q`, add it to the `matches` array
+          $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+              matches.push(str);
+            }
+          });
+
+          cb(matches);
+//var myval = $('.typeahead').typeahead('val');
+//$('#intitule').val("eee");
+
+        };
+      };
+
+        
+        var myJsonString = [];
+        
+        {% for un in liste %}
+           myJsonString.push("{{un}}");
+          
+       {% endfor %} 
+           
+            
+        //for (i=0; i<maliste.length;i++){
+            //myJsonString.push(maliste[i]);
+       // }
+
+        $('#the-basics .typeahead').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+            
+          name: 'intitule',
+          source: substringMatcher(myJsonString)
+        });
+        
+        
+    </script>
+{% endblock %}
